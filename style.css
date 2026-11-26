@@ -1,0 +1,7 @@
+#todo-list {
+  text-decoration: none;
+}
+
+.done {
+  text-decoration: line-through;
+}
