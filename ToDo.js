@@ -18,4 +18,21 @@ function renderTasks() {
   });
 }
 
+function addTask() {
+  const taskText = todoInput.value.trim();
+  if (taskText) {
+    tasks.push({ id: Date.now(), text: taskText, done: false });
+    todoInput.value = "";
+    renderTasks();
+  }
+}
+
+addBtn.addEventListener("click", addTask);
+
+todoInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    addTask();
+  }
+});
+
 renderTasks();
