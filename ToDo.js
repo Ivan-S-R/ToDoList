@@ -3,13 +3,19 @@ const todoInput = document.getElementById("todo-input");
 const addBtn = document.getElementById("add-btn");
 const taskCount = document.getElementById("task-count");
 
-let tasks = ["Task 1", "Task 2", "Task 3"];
+let tasks = [
+  { id: 0, text: "Task 1", done: false },
+  { id: 1, text: "Task 2", done: false },
+  { id: 2, text: "Task 3", done: false },
+];
 
 function renderTasks() {
   todoList.textContent = "";
-  tasks.forEach((task, index) => {
+  tasks.forEach((task) => {
     const li = document.createElement("li");
-    li.textContent = task;
+    li.textContent = task.text;
     todoList.appendChild(li);
   });
 }
+
+renderTasks();
