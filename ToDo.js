@@ -13,7 +13,9 @@ function renderTasks() {
   todoList.textContent = "";
   tasks.forEach((task) => {
     const li = document.createElement("li");
+    li.dataset.id = task.id;
     li.textContent = task.text;
+    li.classList.toggle("done", task.done);
     todoList.appendChild(li);
   });
 }
@@ -33,6 +35,14 @@ todoInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     addTask();
   }
+});
+
+todoList.addEventListener("click", (event) => {
+  const id = Number(event.target.dataset.id);
+  const task = tasks.find((t) => t.id === id);
+  if (!task) return;
+  task.done = !task.done;
+  renderTasks();
 });
 
 renderTasks();
