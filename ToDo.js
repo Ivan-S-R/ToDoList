@@ -3,11 +3,10 @@ const todoInput = document.getElementById("todo-input");
 const addBtn = document.getElementById("add-btn");
 const taskCount = document.getElementById("task-count");
 
-let tasks = [
-  { id: 0, text: "Task 1", done: false },
-  { id: 1, text: "Task 2", done: false },
-  { id: 2, text: "Task 3", done: false },
-];
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 function renderTasks() {
   todoList.textContent = "";
@@ -15,6 +14,10 @@ function renderTasks() {
     const li = document.createElement("li");
     li.dataset.id = task.id;
     li.textContent = task.text;
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "X";
+    deleteBtn.classList.add("delete-btn");
+    li.appendChild(deleteBtn);
     li.classList.toggle("done", task.done);
     todoList.appendChild(li);
   });
@@ -25,6 +28,7 @@ function addTask() {
   if (taskText) {
     tasks.push({ id: Date.now(), text: taskText, done: false });
     todoInput.value = "";
+    saveTasks();
     renderTasks();
   }
 }
@@ -42,6 +46,7 @@ todoList.addEventListener("click", (event) => {
   const task = tasks.find((t) => t.id === id);
   if (!task) return;
   task.done = !task.done;
+  saveTasks();
   renderTasks();
 });
 
