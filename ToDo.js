@@ -42,10 +42,22 @@ todoInput.addEventListener("keydown", (event) => {
 });
 
 todoList.addEventListener("click", (event) => {
-  const id = Number(event.target.dataset.id);
-  const task = tasks.find((t) => t.id === id);
-  if (!task) return;
-  task.done = !task.done;
+  if (event.target.classList.contains("delete-btn")) {
+    tasks = tasks.filter(
+      (task) => task.id !== Number(event.target.parentElement.dataset.id),
+    );
+    saveTasks();
+    renderTasks();
+    return;
+  } else {
+    const li = event.target.closest("li");
+    if (!li) return;
+    const id = Number(li.dataset.id);
+    const task = tasks.find((t) => t.id === id);
+    if (!task) return;
+    task.done = !task.done;
+  }
+
   saveTasks();
   renderTasks();
 });
